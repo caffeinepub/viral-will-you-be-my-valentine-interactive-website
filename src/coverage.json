@@ -1,18 +1,18 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-14T10:37:49.725Z",
+  "generatedAt": "2026-02-14T10:47:12.091Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 4,
-    "implemented": 4,
+    "total": 3,
+    "implemented": 3,
     "items": [
       {
-        "id": "REQ-11",
-        "summary": "Add continuous background music that plays throughout the entire Valentine experience (both the question and celebration stages) using the requested track reference: “glue song” by beabadoobee (sped up + pitched) from https://youtube.com/shorts/Zy02CEOqrR4?si=ULEbg8LDnjIwxoc3.",
+        "id": "REQ-15",
+        "summary": "Make background music reliably start after a user gesture across modern browsers (including mobile Safari/Chrome) even when the initial autoplay attempt is blocked, so that tapping/clicking anywhere on the page (including the Yes/No buttons) starts playback when music is enabled.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/hooks/useBackgroundMusic.ts",
@@ -24,45 +24,31 @@
         ]
       },
       {
-        "id": "REQ-12",
-        "summary": "Serve the background music as a static frontend asset (do not stream from YouTube): add an audio file under the frontend public folder (e.g., frontend/public/assets/audio/glue-song-sped-up-pitched.mp3) and play it via a stable /assets/... URL from the React UI.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/public/assets/audio/glue-song-sped-up-pitched.mp3",
-          "frontend/src/hooks/useBackgroundMusic.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/hooks/useBackgroundMusic.ts"
-        ]
-      },
-      {
-        "id": "REQ-13",
-        "summary": "Add an accessible music control UI that allows the user to toggle background music on/off (mute/unmute) while preserving the current visual theme and layout (mobile + desktop).",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/Header.tsx",
-          "frontend/src/pages/ValentinePage.tsx",
-          "frontend/src/hooks/useBackgroundMusic.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/Header.tsx",
-          "frontend/src/pages/ValentinePage.tsx",
-          "frontend/src/hooks/useBackgroundMusic.ts"
-        ]
-      },
-      {
-        "id": "REQ-14",
-        "summary": "Ensure background audio playback behavior is compatible with modern browser autoplay policies by requiring a user interaction to start playback when needed (without showing intrusive prompts).",
+        "id": "REQ-16",
+        "summary": "Improve audio load/readiness and error handling so the app can detect and surface when the audio asset cannot be loaded from /assets/audio/glue-song-sped-up-pitched.mp3 (e.g., missing file, 404, decode error) instead of silently never playing.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/hooks/useBackgroundMusic.ts",
-          "frontend/src/pages/ValentinePage.tsx",
-          "frontend/src/components/Header.tsx"
+          "frontend/src/components/Header.tsx",
+          "frontend/src/pages/ValentinePage.tsx"
         ],
         "matchedFiles": [
           "frontend/src/hooks/useBackgroundMusic.ts",
-          "frontend/src/pages/ValentinePage.tsx",
-          "frontend/src/components/Header.tsx"
+          "frontend/src/components/Header.tsx",
+          "frontend/src/pages/ValentinePage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-17",
+        "summary": "Update the UI to provide an unobtrusive, accessible prompt when music is enabled but blocked by autoplay policy, guiding the user to tap to enable sound and offering a direct control to start playback.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useBackgroundMusic.ts",
+          "frontend/src/pages/ValentinePage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useBackgroundMusic.ts",
+          "frontend/src/pages/ValentinePage.tsx"
         ]
       }
     ]

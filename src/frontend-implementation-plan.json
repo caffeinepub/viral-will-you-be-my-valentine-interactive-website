@@ -1,100 +1,74 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Continuous background music with persistent mute control",
+  "title": "Reliable background music start via user-gesture recovery, readiness/error states, and blocked-autoplay prompt",
   "requirements": [
     {
-      "id": "REQ-11",
-      "summary": "Add continuous looping background music that persists across question/celebration stage transitions and references the user-provided track source link in comments.",
+      "id": "REQ-15",
+      "summary": "Make background music reliably start after the first user gesture when autoplay is blocked, and keep playback stable across stage transitions and toggle changes.",
       "acceptanceCriteria": [
-        "Background music starts and continues playing across stage transitions (question <-> celebration) without restarting due to component remounts.",
-        "Music loops continuously when it reaches the end.",
-        "The implementation references the provided link in code comments or documentation as the user-provided source reference, without breaking the app if the link is unreachable."
+        "With music enabled, after a fresh page load on a browser that blocks autoplay, the first user gesture (click/tap anywhere on the page, including pressing Yes/No) starts the audio within 1 second.",
+        "If playback is blocked initially, the app registers a user-gesture listener (e.g., pointerdown/touchend/keydown) that re-attempts audio.play() and then removes itself once playback succeeds.",
+        "Playback continues looping across stage transitions (question -> celebration) without restarting unexpectedly.",
+        "If the user toggles music OFF, audio pauses immediately; toggling ON triggers a play attempt and, if blocked, waits for the next user gesture to start."
       ],
       "file_operations": [
         {
           "path": "frontend/src/hooks/useBackgroundMusic.ts",
-          "operation": "create",
-          "description": "Create a React hook that owns a single long-lived HTMLAudioElement instance (looping enabled) so playback does not restart across Valentine stage transitions; include a code comment referencing the user-provided source: https://youtube.com/shorts/Zy02CEOqrR4?si=ULEbg8LDnjIwxoc3, while still loading audio only from a local static asset path."
+          "operation": "modify",
+          "description": "Refactor background music management to (1) attempt play when enabled, (2) detect autoplay blocking and register document-level user-gesture listeners (pointerdown/touchend/keydown) that retry play and self-remove on success, (3) ensure toggle OFF pauses immediately and toggle ON attempts play then falls back to waiting for the next gesture, and (4) avoid restarting audio across UI stage changes by keeping a single looping Audio instance. Verify the component's usage instructions before implementing."
         },
         {
           "path": "frontend/src/pages/ValentinePage.tsx",
           "operation": "modify",
-          "description": "Integrate the background-music hook at the page level (outside the stage conditional branches) so the audio instance is created once and persists while switching between question and celebration UIs; ensure looping behavior is enabled and stage changes do not reset playback position."
+          "description": "Wire the updated useBackgroundMusic hook outputs into the page so that interactions (including Yes/No clicks) naturally count as user gestures for the global listener, and ensure the hook stays mounted for both stages so the loop continues without unexpected restarts. Verify the component's usage instructions before implementing."
         }
       ]
     },
     {
-      "id": "REQ-12",
-      "summary": "Serve background music from a static frontend public asset and play it via a stable /assets/... URL (no YouTube streaming/embedding).",
+      "id": "REQ-16",
+      "summary": "Add explicit audio loading/readiness and error states so failures to load/decode the static MP3 are surfaced in the UI and readiness does not rely only on canplaythrough.",
       "acceptanceCriteria": [
-        "The app does not attempt to embed or stream audio from the YouTube Shorts URL.",
-        "The audio file is loaded from a local static path under frontend/public and is requested successfully in the browser network tab (200).",
-        "No backend changes are required to deliver the audio bytes."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/public/assets/audio/glue-song-sped-up-pitched.mp3",
-          "operation": "create",
-          "description": "Add the background music audio file as a static asset under the public folder so it can be requested directly by the browser (no backend involvement)."
-        },
-        {
-          "path": "frontend/src/hooks/useBackgroundMusic.ts",
-          "operation": "modify",
-          "description": "Configure the audio element source to load from the local static path /assets/audio/glue-song-sped-up-pitched.mp3 (do not fetch/stream from the YouTube link); set appropriate preload/loop behavior."
-        }
-      ]
-    },
-    {
-      "id": "REQ-13",
-      "summary": "Add an accessible Music On/Off control in the existing header, with state persisted across reloads and instant mute/unmute behavior.",
-      "acceptanceCriteria": [
-        "A clearly discoverable control is present on the page (e.g., in the header area) with English label text such as “Music: On/Off” (or equivalent).",
-        "The control is keyboard accessible and has appropriate aria-labels.",
-        "Turning music off immediately silences playback; turning it on resumes playback.",
-        "The music setting persists for the user across page reloads (e.g., via localStorage)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/Header.tsx",
-          "operation": "modify",
-          "description": "Add a header-area toggle control with visible text label (e.g., “Music: On/Off”), keyboard accessibility, and aria-label; keep styling consistent with the current Valentine theme and responsive layout. Use the shadcn-ui Button component for the control; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/pages/ValentinePage.tsx",
-          "operation": "modify",
-          "description": "Wire the header music toggle to the background-music hook state (on/off) and ensure the UI updates immediately; pass props/callbacks to Header so it can display and toggle current music state."
-        },
-        {
-          "path": "frontend/src/hooks/useBackgroundMusic.ts",
-          "operation": "modify",
-          "description": "Persist the user’s music enabled/disabled preference in localStorage and restore it on load; ensure toggling off mutes/pauses immediately and toggling on resumes from the current position."
-        }
-      ]
-    },
-    {
-      "id": "REQ-14",
-      "summary": "Make audio start behavior compatible with autoplay policies by deferring playback until a user gesture is available and avoiding console errors.",
-      "acceptanceCriteria": [
-        "On first page load, if autoplay is blocked, the app does not throw errors and provides a clear path to start music via the music toggle control.",
-        "After the user’s first interaction (e.g., tapping the music toggle or another primary action), playback can start successfully.",
-        "No console errors are emitted during audio initialization/cleanup when switching stages or pressing Start over."
+        "If the audio file fails to load (network error/404/decode), the app sets a distinct error state (not just console noise) and does not keep waiting on canplaythrough indefinitely.",
+        "The music control UI communicates a clear English status when audio is unavailable (e.g., \"Audio failed to load\") and the toggle does not misleadingly imply that music is playing.",
+        "Audio readiness does not rely solely on the canplaythrough event; readiness becomes true when the browser indicates playable state (e.g., canplay/loadeddata/readyState) so playback can start on slower networks/devices."
       ],
       "file_operations": [
         {
           "path": "frontend/src/hooks/useBackgroundMusic.ts",
           "operation": "modify",
-          "description": "Handle play() promise rejections gracefully to support autoplay-blocked scenarios (track whether playback requires a user gesture); expose safe methods for toggle/attempt-start without throwing and ensure cleanup (pause/unload) does not emit console errors."
-        },
-        {
-          "path": "frontend/src/pages/ValentinePage.tsx",
-          "operation": "modify",
-          "description": "Ensure a user interaction path can trigger playback when needed by invoking the hook’s safe attempt-start logic from the music toggle and (when appropriate) from primary interactions already present in the experience (e.g., button clicks), without adding intrusive prompts; confirm no errors during stage transitions or Start over."
+          "description": "Implement richer audio lifecycle state: track loading/readiness using multiple signals (loadeddata/canplay and readyState polling/inspection), and set a distinct error state on audio error/decode failures and on a reasonable load timeout to prevent indefinite waiting; ensure the hook exposes UI-consumable status text/state so the app can display \"Audio failed to load\" when the asset at /assets/audio/glue-song-sped-up-pitched.mp3 cannot be used. Verify the component's usage instructions before implementing."
         },
         {
           "path": "frontend/src/components/Header.tsx",
           "operation": "modify",
-          "description": "Ensure the music toggle control can initiate playback after a user gesture (click/keyboard) when autoplay was blocked, providing a clear path to start audio without intrusive prompts. Use the shadcn-ui Button component for consistent behavior; verify the component's usage instructions before implementing."
+          "description": "Extend the header music control UI to reflect audio status in clear English (e.g., unavailable/error/blocked/playing/paused) while keeping the existing toggle accessible with English aria-labels; ensure the UI does not imply music is playing when the hook reports an error/unavailable state. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ValentinePage.tsx",
+          "operation": "modify",
+          "description": "Pass audio status from useBackgroundMusic into Header so the top-level music control can communicate failures (e.g., \"Audio failed to load\") and avoid misleading state when playback cannot start. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-17",
+      "summary": "Add an unobtrusive, accessible on-screen prompt when music is enabled but blocked by autoplay policy, offering a direct action to start playback.",
+      "acceptanceCriteria": [
+        "When music is enabled and the app detects it needs a user gesture to start (autoplay blocked), an on-screen prompt appears in English (e.g., \"Tap to enable sound\") and is keyboard-accessible.",
+        "Tapping/clicking the prompt triggers a play attempt; once playback succeeds, the prompt disappears.",
+        "The existing header music toggle remains present and accessible (aria-labels remain in English), and the new prompt does not break layout on mobile."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useBackgroundMusic.ts",
+          "operation": "modify",
+          "description": "Expose a dedicated imperative \"play now\" action (in addition to toggle) and a stable \"needsUserGesture\"/blocked state derived from failed play attempts, so the UI prompt can trigger retries and hide immediately once playback succeeds. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ValentinePage.tsx",
+          "operation": "modify",
+          "description": "Add an unobtrusive, mobile-safe, keyboard-accessible prompt UI (using existing composed UI building blocks, without editing immutable ui components) that appears only when music is enabled and autoplay is blocked; clicking/pressing the prompt calls the hook's play action, and the prompt disappears once playback starts. Verify the component's usage instructions before implementing."
         }
       ]
     }

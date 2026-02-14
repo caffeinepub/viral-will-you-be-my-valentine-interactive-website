@@ -1,13 +1,13 @@
 {
   "frontend/src/App.tsx": "Main application entry point that renders the ValentinePage component.",
   "frontend/src/hooks/useQueries.ts": "Contains backend query hooks (minimal for this static experience).",
-  "frontend/src/pages/ValentinePage.tsx": "Main Valentine's Day interactive page with question and celebration stages, featuring background music integration via useBackgroundMusic hook, progressive button scaling, and personalized celebration messages for Tannu.",
-  "frontend/src/components/Header.tsx": "Header component with Valentine's Day branding, animated heart icon, and optional music toggle button that displays Music/VolumeX icons based on enabled state.",
+  "frontend/src/pages/ValentinePage.tsx": "Main Valentine's Day interactive page with question and celebration stages, featuring background music integration via useBackgroundMusic hook with visible \"Tap to enable sound\" prompt when autoplay is blocked, progressive button scaling, personalized celebration messages for Tannu, and share/restart functionality.",
+  "frontend/src/components/Header.tsx": "Header component with Valentine's Day branding, animated heart icon, and music toggle button with tooltip showing audio status (loading/playing/paused/error/blocked) and disabled state when audio fails to load.",
   "frontend/src/components/Footer.tsx": "Footer component with copyright, attribution, and caffeine.ai link with UTM tracking.",
   "frontend/src/components/Confetti.tsx": "Animated confetti component that displays falling hearts during the celebration stage using CSS keyframe animations.",
   "frontend/index.css": "Global styles with OKLCH color system customized for Valentine's Day theme (rose/pink palette), Pacifico display font, and custom CSS keyframe animations for all interactive elements.",
   "frontend/tailwind.config.js": "Tailwind configuration with extended Valentine's theme colors and Pacifico font family.",
   "frontend/package.json": "Package configuration without framer-motion dependency (using CSS animations instead).",
   "frontend/src/index.css": "Global styles with OKLCH color system customized for Valentine's Day theme (rose/pink palette), Pacifico display font, and custom CSS keyframe animations for all interactive elements.",
-  "frontend/src/hooks/useBackgroundMusic.ts": "Custom React hook that manages a persistent HTMLAudioElement for looping background music with localStorage-persisted on/off state, autoplay-blocking detection, and graceful error handling."
+  "frontend/src/hooks/useBackgroundMusic.ts": "Custom React hook that manages persistent HTMLAudioElement for looping background music with localStorage-persisted state, comprehensive autoplay-blocking recovery via document-level gesture listeners, multiple readiness signals (canplay/loadeddata/canplaythrough), load timeout and error handling, and exposes imperative playNow action plus user-friendly status text for UI consumption."
 }

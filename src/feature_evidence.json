@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-continuous-background-music-that-plays-throughout-the-entire-valentine-experience-both-the-question-and-celebration-stages-using-the-requested-track-reference-glue-song-by-beabadoobee-sped-up-pitched-from-https-youtube-com-shorts-zy02ceoqrr4-si-ulebg8ldnjiwxoc3",
-      "featureTitle": "Add continuous background music that plays throughout the entire Valentine experience (both the question and celebration stages) using the requested track reference: “glue song” by beabadoobee (sped up + pitched) from https://youtube.com/shorts/Zy02CEOqrR4?si=ULEbg8LDnjIwxoc3.",
+      "featureId": "feature-make-background-music-reliably-start-after-a-user-gesture-across-modern-browsers-including-mobile-safari-chrome-even-when-the-initial-autoplay-attempt-is-blocked-so-that-tapping-clicking-anywhere-on-the-page-including-the-yes-no-buttons-starts-playback-when-music-is-enabled",
+      "featureTitle": "Make background music reliably start after a user gesture across modern browsers (including mobile Safari/Chrome) even when the initial autoplay attempt is blocked, so that tapping/clicking anywhere on the page (including the Yes/No buttons) starts playback when music is enabled.",
       "files": [
         "frontend/src/hooks/useBackgroundMusic.ts",
         "frontend/src/pages/ValentinePage.tsx"
@@ -16,31 +16,13 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-11"
+        "REQ-15"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-serve-the-background-music-as-a-static-frontend-asset-do-not-stream-from-youtube-add-an-audio-file-under-the-frontend-public-folder-e-g-frontend-public-assets-audio-glue-song-sped-up-pitched-mp3-and-play-it-via-a-stable-assets-url-from-the-react-ui",
-      "featureTitle": "Serve the background music as a static frontend asset (do not stream from YouTube): add an audio file under the frontend public folder (e.g., frontend/public/assets/audio/glue-song-sped-up-pitched.mp3) and play it via a stable /assets/... URL from the React UI.",
-      "files": [
-        "frontend/src/hooks/useBackgroundMusic.ts"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-12"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-an-accessible-music-control-ui-that-allows-the-user-to-toggle-background-music-on-off-mute-unmute-while-preserving-the-current-visual-theme-and-layout-mobile-desktop",
-      "featureTitle": "Add an accessible music control UI that allows the user to toggle background music on/off (mute/unmute) while preserving the current visual theme and layout (mobile + desktop).",
+      "featureId": "feature-improve-audio-load-readiness-and-error-handling-so-the-app-can-detect-and-surface-when-the-audio-asset-cannot-be-loaded-from-assets-audio-glue-song-sped-up-pitched-mp3-e-g-missing-file-404-decode-error-instead-of-silently-never-playing",
+      "featureTitle": "Improve audio load/readiness and error handling so the app can detect and surface when the audio asset cannot be loaded from /assets/audio/glue-song-sped-up-pitched.mp3 (e.g., missing file, 404, decode error) instead of silently never playing.",
       "files": [
         "frontend/src/components/Header.tsx",
         "frontend/src/hooks/useBackgroundMusic.ts",
@@ -54,15 +36,14 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-13"
+        "REQ-16"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-background-audio-playback-behavior-is-compatible-with-modern-browser-autoplay-policies-by-requiring-a-user-interaction-to-start-playback-when-needed-without-showing-intrusive-prompts",
-      "featureTitle": "Ensure background audio playback behavior is compatible with modern browser autoplay policies by requiring a user interaction to start playback when needed (without showing intrusive prompts).",
+      "featureId": "feature-update-the-ui-to-provide-an-unobtrusive-accessible-prompt-when-music-is-enabled-but-blocked-by-autoplay-policy-guiding-the-user-to-tap-to-enable-sound-and-offering-a-direct-control-to-start-playback",
+      "featureTitle": "Update the UI to provide an unobtrusive, accessible prompt when music is enabled but blocked by autoplay policy, guiding the user to tap to enable sound and offering a direct control to start playback.",
       "files": [
-        "frontend/src/components/Header.tsx",
         "frontend/src/hooks/useBackgroundMusic.ts",
         "frontend/src/pages/ValentinePage.tsx"
       ],
@@ -74,7 +55,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-14"
+        "REQ-17"
       ],
       "confidence": "high"
     }

@@ -1,91 +1,74 @@
 {
   "kind": "build_request",
-  "title": "Add continuous background music playback with mute control",
-  "priority": "normal",
+  "title": "Fix background music not starting after user interaction",
+  "priority": "high",
   "requirements": [
     {
-      "id": "REQ-11",
-      "text": "Add continuous background music that plays throughout the entire Valentine experience (both the question and celebration stages) using the requested track reference: “glue song” by beabadoobee (sped up + pitched) from https://youtube.com/shorts/Zy02CEOqrR4?si=ULEbg8LDnjIwxoc3.",
+      "id": "REQ-15",
+      "text": "Make background music reliably start after a user gesture across modern browsers (including mobile Safari/Chrome) even when the initial autoplay attempt is blocked, so that tapping/clicking anywhere on the page (including the Yes/No buttons) starts playback when music is enabled.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-7"
         ],
         "quotes": [
-          "Can you add a song which will be playing in the background the whole time\nSong is glue song by babadoobee (sped up + pitched) .. https://youtube.com/shorts/Zy02CEOqrR4?si=ULEbg8LDnjIwxoc3 this is the song link"
+          "No still the music is not playing even after clicking no or tapping on screen elsewhere"
         ]
       },
       "acceptanceCriteria": [
-        "Background music starts and continues playing across stage transitions (question <-> celebration) without restarting due to component remounts.",
-        "Music loops continuously when it reaches the end.",
-        "The implementation references the provided link in code comments or documentation as the user-provided source reference, without breaking the app if the link is unreachable."
+        "With music enabled, after a fresh page load on a browser that blocks autoplay, the first user gesture (click/tap anywhere on the page, including pressing Yes/No) starts the audio within 1 second.",
+        "If playback is blocked initially, the app registers a user-gesture listener (e.g., pointerdown/touchend/keydown) that re-attempts audio.play() and then removes itself once playback succeeds.",
+        "Playback continues looping across stage transitions (question -> celebration) without restarting unexpectedly.",
+        "If the user toggles music OFF, audio pauses immediately; toggling ON triggers a play attempt and, if blocked, waits for the next user gesture to start."
       ]
     },
     {
-      "id": "REQ-12",
-      "text": "Serve the background music as a static frontend asset (do not stream from YouTube): add an audio file under the frontend public folder (e.g., frontend/public/assets/audio/glue-song-sped-up-pitched.mp3) and play it via a stable /assets/... URL from the React UI.",
+      "id": "REQ-16",
+      "text": "Improve audio load/readiness and error handling so the app can detect and surface when the audio asset cannot be loaded from /assets/audio/glue-song-sped-up-pitched.mp3 (e.g., missing file, 404, decode error) instead of silently never playing.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-7"
         ],
         "quotes": [
-          "Song is glue song by babadoobee (sped up + pitched) .. https://youtube.com/shorts/Zy02CEOqrR4?si=ULEbg8LDnjIwxoc3 this is the song link"
+          "the music is not playing"
         ]
       },
       "acceptanceCriteria": [
-        "The app does not attempt to embed or stream audio from the YouTube Shorts URL.",
-        "The audio file is loaded from a local static path under frontend/public and is requested successfully in the browser network tab (200).",
-        "No backend changes are required to deliver the audio bytes."
+        "If the audio file fails to load (network error/404/decode), the app sets a distinct error state (not just console noise) and does not keep waiting on canplaythrough indefinitely.",
+        "The music control UI communicates a clear English status when audio is unavailable (e.g., \"Audio failed to load\") and the toggle does not misleadingly imply that music is playing.",
+        "Audio readiness does not rely solely on the canplaythrough event; readiness becomes true when the browser indicates playable state (e.g., canplay/loadeddata/readyState) so playback can start on slower networks/devices."
       ]
     },
     {
-      "id": "REQ-13",
-      "text": "Add an accessible music control UI that allows the user to toggle background music on/off (mute/unmute) while preserving the current visual theme and layout (mobile + desktop).",
+      "id": "REQ-17",
+      "text": "Update the UI to provide an unobtrusive, accessible prompt when music is enabled but blocked by autoplay policy, guiding the user to tap to enable sound and offering a direct control to start playback.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-7"
         ],
         "quotes": [
-          "Can you add a song which will be playing in the background the whole time"
+          "even after clicking no or tapping on screen elsewhere"
         ]
       },
       "acceptanceCriteria": [
-        "A clearly discoverable control is present on the page (e.g., in the header area) with English label text such as “Music: On/Off” (or equivalent).",
-        "The control is keyboard accessible and has appropriate aria-labels.",
-        "Turning music off immediately silences playback; turning it on resumes playback.",
-        "The music setting persists for the user across page reloads (e.g., via localStorage)."
-      ]
-    },
-    {
-      "id": "REQ-14",
-      "text": "Ensure background audio playback behavior is compatible with modern browser autoplay policies by requiring a user interaction to start playback when needed (without showing intrusive prompts).",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-7"
-        ],
-        "quotes": [
-          "playing in the background the whole time"
-        ]
-      },
-      "acceptanceCriteria": [
-        "On first page load, if autoplay is blocked, the app does not throw errors and provides a clear path to start music via the music toggle control.",
-        "After the user’s first interaction (e.g., tapping the music toggle or another primary action), playback can start successfully.",
-        "No console errors are emitted during audio initialization/cleanup when switching stages or pressing Start over."
+        "When music is enabled and the app detects it needs a user gesture to start (autoplay blocked), an on-screen prompt appears in English (e.g., \"Tap to enable sound\") and is keyboard-accessible.",
+        "Tapping/clicking the prompt triggers a play attempt; once playback succeeds, the prompt disappears.",
+        "The existing header music toggle remains present and accessible (aria-labels remain in English), and the new prompt does not break layout on mobile."
       ]
     }
   ],
   "constraints": [
-    "Frontend immutable paths must not be edited: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui.",
-    "Do not stream, embed, or fetch audio directly from the provided YouTube Shorts URL; serve audio from static assets under frontend/public.",
-    "Keep the backend as-is (single Motoko actor); do not add backend endpoints for media serving."
+    "Do not stream audio from YouTube; keep using a static frontend asset at /assets/audio/glue-song-sped-up-pitched.mp3.",
+    "Do not route audio bytes through the backend; keep this purely frontend/static.",
+    "Do not edit files under frontend/src/components/ui or other immutablePaths; compose existing UI components instead.",
+    "Keep all backend logic unchanged (backend/main.mo remains empty unless strictly necessary)."
   ],
   "nonGoals": [
-    "Handling music licensing/rights or downloading/transcoding audio from YouTube automatically.",
-    "Adding a playlist, track search, or multiple songs.",
-    "Adding real-time synchronization or beat-matched animations tied to audio."
+    "Adding new songs, playlists, or volume sliders beyond what is required to make current playback reliable.",
+    "Adding authentication, user accounts, or any backend persistence for audio playback beyond existing localStorage preference behavior.",
+    "Implementing real-time features or third-party audio/CDN integrations."
   ],
   "imageRequirements": {
     "required": [],

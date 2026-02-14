@@ -1,15 +1,16 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 9,
+  "projectStateVersion": 11,
   "summary": "Build a viral \"Will you be my Valentine?\" website.",
   "architectural_notes": [
     "Store and serve the two GIF assets from the frontend (e.g., under public/assets) and reference them directly in the UI.",
     "Background audio should be implemented in a way that respects browser autoplay policies (likely starts after first user interaction) and should use a properly licensed/hosted audio asset rather than streaming directly from a YouTube link."
   ],
   "known_issues": [
-    "Deployment may fail without a visible error message due to a temporary platform/backend timeout during compilation; retrying deploy often succeeds."
+    "Deployment may fail without a visible error message due to a temporary platform/backend timeout during compilation; retrying deploy often succeeds.",
+    "Background music may fail to start even after user interaction (tap/click); investigate autoplay policy compliance and audio play trigger/initialization across browsers/devices."
   ],
-  "isFixRequest": false,
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-create-a-single-page-interactive-will-you-be-my-valentine-experience-with-a-clear-prompt-two-primary-actions-yes-and-no-and-delightful-animations-that-work-on-both-desktop-and-mobile",
@@ -120,6 +121,30 @@
       "title": "Ensure background audio playback behavior is compatible with modern browser autoplay policies by requiring a user interaction to start playback when needed (without showing intrusive prompts).",
       "reqIds": [
         "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-background-music-reliably-start-after-a-user-gesture-across-modern-browsers-including-mobile-safari-chrome-even-when-the-initial-autoplay-attempt-is-blocked-so-that-tapping-clicking-anywhere-on-the-page-including-the-yes-no-buttons-starts-playback-when-music-is-enabled",
+      "title": "Make background music reliably start after a user gesture across modern browsers (including mobile Safari/Chrome) even when the initial autoplay attempt is blocked, so that tapping/clicking anywhere on the page (including the Yes/No buttons) starts playback when music is enabled.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-improve-audio-load-readiness-and-error-handling-so-the-app-can-detect-and-surface-when-the-audio-asset-cannot-be-loaded-from-assets-audio-glue-song-sped-up-pitched-mp3-e-g-missing-file-404-decode-error-instead-of-silently-never-playing",
+      "title": "Improve audio load/readiness and error handling so the app can detect and surface when the audio asset cannot be loaded from /assets/audio/glue-song-sped-up-pitched.mp3 (e.g., missing file, 404, decode error) instead of silently never playing.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-ui-to-provide-an-unobtrusive-accessible-prompt-when-music-is-enabled-but-blocked-by-autoplay-policy-guiding-the-user-to-tap-to-enable-sound-and-offering-a-direct-control-to-start-playback",
+      "title": "Update the UI to provide an unobtrusive, accessible prompt when music is enabled but blocked by autoplay policy, guiding the user to tap to enable sound and offering a direct control to start playback.",
+      "reqIds": [
+        "REQ-17"
       ],
       "version": 1
     }

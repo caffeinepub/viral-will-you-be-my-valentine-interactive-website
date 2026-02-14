@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Heart, Share2, RotateCcw, Check } from 'lucide-react';
+import { Heart, Share2, RotateCcw, Check, Volume2 } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Confetti from '@/components/Confetti';
@@ -12,7 +12,14 @@ export default function ValentinePage() {
   const [showCopied, setShowCopied] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const { isEnabled: musicEnabled, toggle: toggleMusic } = useBackgroundMusic();
+  const { 
+    isEnabled: musicEnabled, 
+    toggle: toggleMusic, 
+    playNow,
+    needsUserGesture,
+    status,
+    statusText
+  } = useBackgroundMusic();
 
   const yesButtonScale = 1 + noClickCount * 0.3;
   const noButtonScale = Math.max(0.3, 1 - noClickCount * 0.15);
@@ -61,9 +68,30 @@ export default function ValentinePage() {
     }
   };
 
+  const showAudioPrompt = musicEnabled && needsUserGesture && status === 'blocked';
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-rose-50 via-pink-50 to-red-50 dark:from-rose-950 dark:via-pink-950 dark:to-red-950">
-      <Header musicEnabled={musicEnabled} onMusicToggle={toggleMusic} />
+      <Header 
+        musicEnabled={musicEnabled} 
+        onMusicToggle={toggleMusic}
+        audioStatus={statusText}
+      />
+      
+      {/* Audio prompt overlay */}
+      {showAudioPrompt && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-fade-in-down">
+          <Button
+            onClick={playNow}
+            size="lg"
+            className="bg-rose-500 hover:bg-rose-600 text-white font-semibold px-6 py-3 rounded-full shadow-2xl hover:shadow-rose-500/50 transition-all duration-300 flex items-center gap-2"
+            aria-label="Tap to enable sound"
+          >
+            <Volume2 className="h-5 w-5 animate-pulse" />
+            Tap to enable sound
+          </Button>
+        </div>
+      )}
       
       <main className="flex-1 flex items-center justify-center px-4 py-12 relative overflow-hidden">
         {/* Background pattern */}
