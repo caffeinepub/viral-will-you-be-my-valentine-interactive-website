@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 9,
+  "summary": "Build a viral \"Will you be my Valentine?\" website.",
+  "architectural_notes": [
+    "Store and serve the two GIF assets from the frontend (e.g., under public/assets) and reference them directly in the UI.",
+    "Background audio should be implemented in a way that respects browser autoplay policies (likely starts after first user interaction) and should use a properly licensed/hosted audio asset rather than streaming directly from a YouTube link."
+  ],
+  "known_issues": [
+    "Deployment may fail without a visible error message due to a temporary platform/backend timeout during compilation; retrying deploy often succeeds."
+  ],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-create-a-single-page-interactive-will-you-be-my-valentine-experience-with-a-clear-prompt-two-primary-actions-yes-and-no-and-delightful-animations-that-work-on-both-desktop-and-mobile",
+      "title": "Create a single-page interactive “Will you be my Valentine?” experience with a clear prompt, two primary actions (“Yes” and “No”), and delightful animations that work on both desktop and mobile.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-viral-interaction-pattern-tapping-clicking-no-should-progressively-make-yes-more-compelling-e-g-increasing-size-adding-emphasis-and-or-make-no-harder-to-click-e-g-playful-movement-while-remaining-accessible-and-not-breaking-the-layout",
+      "title": "Implement the viral interaction pattern: tapping/clicking “No” should progressively make “Yes” more compelling (e.g., increasing size, adding emphasis) and/or make “No” harder to click (e.g., playful movement), while remaining accessible and not breaking the layout.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-when-the-user-clicks-yes-transition-to-a-celebration-screen-with-a-romantic-confirmation-message-celebratory-animation-e-g-floating-hearts-confetti-and-a-clear-start-over-control-to-replay-the-experience",
+      "title": "When the user clicks “Yes”, transition to a celebration screen with a romantic confirmation message, celebratory animation (e.g., floating hearts/confetti), and a clear “Start over” control to replay the experience.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-lightweight-sharing-support-to-encourage-virality-include-a-share-button-that-uses-the-web-share-api-when-available-and-otherwise-provides-a-copy-to-clipboard-fallback-for-the-current-page-url-with-a-short-editable-share-message-in-english",
+      "title": "Add lightweight sharing support to encourage virality: include a “Share” button that uses the Web Share API when available, and otherwise provides a copy-to-clipboard fallback for the current page URL with a short, editable share message in English.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-coherent-distinctive-visual-theme-suitable-for-a-playful-valentine-micro-site-colors-typography-spacing-and-motion-and-enforce-it-consistently-across-all-screens-avoid-default-plain-styling",
+      "title": "Apply a coherent, distinctive visual theme suitable for a playful Valentine micro-site (colors, typography, spacing, and motion) and enforce it consistently across all screens. Avoid default/plain styling.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-generated-static-visual-assets-illustrations-background-to-support-the-theme-store-them-under-frontend-public-assets-generated-and-render-them-in-the-ui-without-routing-image-bytes-through-the-backend",
+      "title": "Add generated static visual assets (illustrations/background) to support the theme, store them under frontend/public/assets/generated, and render them in the UI without routing image bytes through the backend.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-question-first-screen-content-order-to-1-show-the-text-tannu-at-the-top-2-display-the-first-uploaded-gif-cat-love-you-gif-below-it-and-3-show-the-prompt-text-will-you-be-my-valentine-below-the-gif",
+      "title": "Update the question (first) screen content order to: (1) show the text \"Tannu\" at the top, (2) display the first uploaded GIF \"cat-love-you.gif\" below it, and (3) show the prompt text \"Will you be my valentine? 💕\" below the GIF.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-adjust-the-no-interaction-behavior-so-that-each-click-progressively-scales-the-no-button-smaller-and-scales-the-yes-button-larger-while-keeping-both-usable-and-not-breaking-layout",
+      "title": "Adjust the \"No\" interaction behavior so that each click progressively scales the \"No\" button smaller and scales the \"Yes\" button larger (while keeping both usable and not breaking layout).",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-celebration-after-yes-screen-to-display-in-order-1-tannu-2-the-second-uploaded-gif-hai-gif-3-a-large-headline-text-exactly-yay-you-re-my-valentine-and-4-a-smaller-line-of-text-exactly-i-knew-you-would-say-yes-baby-hehehehe",
+      "title": "Update the celebration (after \"Yes\") screen to display, in order: (1) \"Tannu\", (2) the second uploaded GIF \"hai.gif\", (3) a large headline text exactly \"Yay! You're my valentine 😘\", and (4) a smaller line of text exactly \"I knew you would say yes baby hehehehe\".",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-uploaded-gif-files-as-static-frontend-assets-and-reference-them-via-stable-paths-from-the-react-ui-do-not-route-image-bytes-through-the-backend",
+      "title": "Add the uploaded GIF files as static frontend assets and reference them via stable paths from the React UI (do not route image bytes through the backend).",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-continuous-background-music-that-plays-throughout-the-entire-valentine-experience-both-the-question-and-celebration-stages-using-the-requested-track-reference-glue-song-by-beabadoobee-sped-up-pitched-from-https-youtube-com-shorts-zy02ceoqrr4-si-ulebg8ldnjiwxoc3",
+      "title": "Add continuous background music that plays throughout the entire Valentine experience (both the question and celebration stages) using the requested track reference: “glue song” by beabadoobee (sped up + pitched) from https://youtube.com/shorts/Zy02CEOqrR4?si=ULEbg8LDnjIwxoc3.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-serve-the-background-music-as-a-static-frontend-asset-do-not-stream-from-youtube-add-an-audio-file-under-the-frontend-public-folder-e-g-frontend-public-assets-audio-glue-song-sped-up-pitched-mp3-and-play-it-via-a-stable-assets-url-from-the-react-ui",
+      "title": "Serve the background music as a static frontend asset (do not stream from YouTube): add an audio file under the frontend public folder (e.g., frontend/public/assets/audio/glue-song-sped-up-pitched.mp3) and play it via a stable /assets/... URL from the React UI.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-accessible-music-control-ui-that-allows-the-user-to-toggle-background-music-on-off-mute-unmute-while-preserving-the-current-visual-theme-and-layout-mobile-desktop",
+      "title": "Add an accessible music control UI that allows the user to toggle background music on/off (mute/unmute) while preserving the current visual theme and layout (mobile + desktop).",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-background-audio-playback-behavior-is-compatible-with-modern-browser-autoplay-policies-by-requiring-a-user-interaction-to-start-playback-when-needed-without-showing-intrusive-prompts",
+      "title": "Ensure background audio playback behavior is compatible with modern browser autoplay policies by requiring a user interaction to start playback when needed (without showing intrusive prompts).",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create a viral \"Will you be my Valentine?\" website experience (interactive prompt page).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Customize UI content and media: first page shows 'Tannu', then 1st GIF, then 'Will you be my valentine? 💕'; 'No' click makes No progressively smaller and Yes progressively larger; Yes screen shows 'Tannu', 2nd GIF, big 'Yay! You're my valentine 😘', and small 'I knew you would say yes baby hehehehe'.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Add continuous background music playback across the site (requested track: 'glue song' by beabadoobee, sped up + pitched; provided YouTube Shorts link).",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Viral “Will you be my Valentine?” interactive website",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

@@ -1,0 +1,82 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-add-continuous-background-music-that-plays-throughout-the-entire-valentine-experience-both-the-question-and-celebration-stages-using-the-requested-track-reference-glue-song-by-beabadoobee-sped-up-pitched-from-https-youtube-com-shorts-zy02ceoqrr4-si-ulebg8ldnjiwxoc3",
+      "featureTitle": "Add continuous background music that plays throughout the entire Valentine experience (both the question and celebration stages) using the requested track reference: “glue song” by beabadoobee (sped up + pitched) from https://youtube.com/shorts/Zy02CEOqrR4?si=ULEbg8LDnjIwxoc3.",
+      "files": [
+        "frontend/src/hooks/useBackgroundMusic.ts",
+        "frontend/src/pages/ValentinePage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-serve-the-background-music-as-a-static-frontend-asset-do-not-stream-from-youtube-add-an-audio-file-under-the-frontend-public-folder-e-g-frontend-public-assets-audio-glue-song-sped-up-pitched-mp3-and-play-it-via-a-stable-assets-url-from-the-react-ui",
+      "featureTitle": "Serve the background music as a static frontend asset (do not stream from YouTube): add an audio file under the frontend public folder (e.g., frontend/public/assets/audio/glue-song-sped-up-pitched.mp3) and play it via a stable /assets/... URL from the React UI.",
+      "files": [
+        "frontend/src/hooks/useBackgroundMusic.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-12"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-an-accessible-music-control-ui-that-allows-the-user-to-toggle-background-music-on-off-mute-unmute-while-preserving-the-current-visual-theme-and-layout-mobile-desktop",
+      "featureTitle": "Add an accessible music control UI that allows the user to toggle background music on/off (mute/unmute) while preserving the current visual theme and layout (mobile + desktop).",
+      "files": [
+        "frontend/src/components/Header.tsx",
+        "frontend/src/hooks/useBackgroundMusic.ts",
+        "frontend/src/pages/ValentinePage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-13"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-background-audio-playback-behavior-is-compatible-with-modern-browser-autoplay-policies-by-requiring-a-user-interaction-to-start-playback-when-needed-without-showing-intrusive-prompts",
+      "featureTitle": "Ensure background audio playback behavior is compatible with modern browser autoplay policies by requiring a user interaction to start playback when needed (without showing intrusive prompts).",
+      "files": [
+        "frontend/src/components/Header.tsx",
+        "frontend/src/hooks/useBackgroundMusic.ts",
+        "frontend/src/pages/ValentinePage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-14"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

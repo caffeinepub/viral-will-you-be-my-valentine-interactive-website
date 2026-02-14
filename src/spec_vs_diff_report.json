@@ -1,0 +1,43 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-14T10:37:49.723Z",
+  "summary": "Implemented a background-music hook that plays a looping static audio file, persists enable/disable state in localStorage, and added a header icon button to toggle music. However, the diff does not show the required static audio asset being added under frontend/public, the UI control lacks a visible English label (icon-only), and the autoplay-blocked state (needsUserGesture) is not surfaced to provide a clear user path when autoplay is blocked.",
+  "missing_requirements": [
+    {
+      "id": "REQ-12",
+      "requirement": "Serve the background music as a static frontend asset by adding an audio file under frontend/public (e.g., frontend/public/assets/audio/glue-song-sped-up-pitched.mp3) and playing it via a stable /assets/... URL.",
+      "reason": "The hook references /assets/audio/glue-song-sped-up-pitched.mp3 and includes a note that the file must be manually added, but the diff does not show any added file under frontend/public/assets/audio.",
+      "evidence": [
+        "frontend/src/hooks/useBackgroundMusic.ts"
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "requirement": "Add an accessible music control UI with an English label such as “Music: On/Off” (or equivalent) that is clearly discoverable and keyboard accessible.",
+      "reason": "Header adds an icon-only button with aria-labels, but no visible English label text like “Music: On/Off” is shown; acceptance criteria explicitly calls for label text.",
+      "evidence": [
+        "frontend/src/components/Header.tsx"
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "requirement": "Provide a clear path to start music via the music toggle control when autoplay is blocked, without errors or intrusive prompts.",
+      "reason": "Autoplay blocking is detected via needsUserGesture in the hook, but the UI does not use or display this state, so there is no explicit in-app indication/path beyond an unlabeled icon button.",
+      "evidence": [
+        "frontend/src/hooks/useBackgroundMusic.ts",
+        "frontend/src/pages/ValentinePage.tsx",
+        "frontend/src/components/Header.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [],
+  "confidence": 0.74,
+  "changed_files": [
+    "frontend-file-summaries.txt",
+    "frontend/src/components/Header.tsx",
+    "frontend/src/hooks/useBackgroundMusic.ts",
+    "frontend/src/pages/ValentinePage.tsx",
+    "project_state.json"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "backend/main.mo": "Empty Motoko actor with no backend logic.",
+  "feature_evidence.json": "Feature evidence report mapping Valentine music and UI requirements to implementation files.",
+  "frontend-file-summaries.txt": "Text file listing high-level summaries for all frontend files.",
+  "frontend/index.css": "Global Tailwind-based styling with OKLCH colors, fonts, and animation keyframes.",
+  "frontend/index.html": "Base HTML shell loading the React app entrypoint.",
+  "frontend/src/App.tsx": "Simple entry component that renders ValentinePage.",
+  "frontend/src/components/Confetti.tsx": "Generates animated falling heart confetti using randomized pieces.",
+  "frontend/src/components/Footer.tsx": "Footer with copyright text and caffeine.ai attribution link.",
+  "frontend/src/components/Header.tsx": "Header with Valentine branding and an optional music toggle button.",
+  "frontend/src/hooks/useActor.ts": "Creates and manages authenticated or anonymous backend actors via react-query.",
+  "frontend/src/hooks/useBackgroundMusic.ts": "Manages looping background audio with autoplay handling and persistent on/off state.",
+  "frontend/src/hooks/useInternetIdentity.ts": "Internet Identity React context providing login, logout, and identity loading.",
+  "frontend/src/hooks/useQueries.ts": "Lightweight hook exposing backend readiness state using useActor.",
+  "frontend/src/index.css": "Defines global Tailwind layers, theme CSS variables for light/dark modes, base styles, and custom animation keyframes.",
+  "frontend/src/main.tsx": "Bootstraps the React app with React Query and Internet Identity providers and imports global styles.",
+  "frontend/src/pages/ValentinePage.tsx": "Implements the interactive Valentine flow with yes/no logic, animations, sharing support, and celebration UI.",
+  "frontend/tailwind.config.js": "Configures Tailwind with custom colors from CSS variables, animations, fonts, plugins, and container settings.",
+  "project_state.json": "Describes project state, including requirements, features, issues, and architectural notes for the Valentine site."
+}

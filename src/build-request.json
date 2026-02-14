@@ -1,0 +1,94 @@
+{
+  "kind": "build_request",
+  "title": "Add continuous background music playback with mute control",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-11",
+      "text": "Add continuous background music that plays throughout the entire Valentine experience (both the question and celebration stages) using the requested track reference: “glue song” by beabadoobee (sped up + pitched) from https://youtube.com/shorts/Zy02CEOqrR4?si=ULEbg8LDnjIwxoc3.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "Can you add a song which will be playing in the background the whole time\nSong is glue song by babadoobee (sped up + pitched) .. https://youtube.com/shorts/Zy02CEOqrR4?si=ULEbg8LDnjIwxoc3 this is the song link"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Background music starts and continues playing across stage transitions (question <-> celebration) without restarting due to component remounts.",
+        "Music loops continuously when it reaches the end.",
+        "The implementation references the provided link in code comments or documentation as the user-provided source reference, without breaking the app if the link is unreachable."
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "text": "Serve the background music as a static frontend asset (do not stream from YouTube): add an audio file under the frontend public folder (e.g., frontend/public/assets/audio/glue-song-sped-up-pitched.mp3) and play it via a stable /assets/... URL from the React UI.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "Song is glue song by babadoobee (sped up + pitched) .. https://youtube.com/shorts/Zy02CEOqrR4?si=ULEbg8LDnjIwxoc3 this is the song link"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The app does not attempt to embed or stream audio from the YouTube Shorts URL.",
+        "The audio file is loaded from a local static path under frontend/public and is requested successfully in the browser network tab (200).",
+        "No backend changes are required to deliver the audio bytes."
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "text": "Add an accessible music control UI that allows the user to toggle background music on/off (mute/unmute) while preserving the current visual theme and layout (mobile + desktop).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "Can you add a song which will be playing in the background the whole time"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A clearly discoverable control is present on the page (e.g., in the header area) with English label text such as “Music: On/Off” (or equivalent).",
+        "The control is keyboard accessible and has appropriate aria-labels.",
+        "Turning music off immediately silences playback; turning it on resumes playback.",
+        "The music setting persists for the user across page reloads (e.g., via localStorage)."
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "text": "Ensure background audio playback behavior is compatible with modern browser autoplay policies by requiring a user interaction to start playback when needed (without showing intrusive prompts).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "playing in the background the whole time"
+        ]
+      },
+      "acceptanceCriteria": [
+        "On first page load, if autoplay is blocked, the app does not throw errors and provides a clear path to start music via the music toggle control.",
+        "After the user’s first interaction (e.g., tapping the music toggle or another primary action), playback can start successfully.",
+        "No console errors are emitted during audio initialization/cleanup when switching stages or pressing Start over."
+      ]
+    }
+  ],
+  "constraints": [
+    "Frontend immutable paths must not be edited: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui.",
+    "Do not stream, embed, or fetch audio directly from the provided YouTube Shorts URL; serve audio from static assets under frontend/public.",
+    "Keep the backend as-is (single Motoko actor); do not add backend endpoints for media serving."
+  ],
+  "nonGoals": [
+    "Handling music licensing/rights or downloading/transcoding audio from YouTube automatically.",
+    "Adding a playlist, track search, or multiple songs.",
+    "Adding real-time synchronization or beat-matched animations tied to audio."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

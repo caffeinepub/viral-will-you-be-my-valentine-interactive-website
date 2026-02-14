@@ -1,0 +1,83 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-14T10:37:49.725Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 4,
+    "implemented": 4,
+    "items": [
+      {
+        "id": "REQ-11",
+        "summary": "Add continuous background music that plays throughout the entire Valentine experience (both the question and celebration stages) using the requested track reference: “glue song” by beabadoobee (sped up + pitched) from https://youtube.com/shorts/Zy02CEOqrR4?si=ULEbg8LDnjIwxoc3.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useBackgroundMusic.ts",
+          "frontend/src/pages/ValentinePage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useBackgroundMusic.ts",
+          "frontend/src/pages/ValentinePage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-12",
+        "summary": "Serve the background music as a static frontend asset (do not stream from YouTube): add an audio file under the frontend public folder (e.g., frontend/public/assets/audio/glue-song-sped-up-pitched.mp3) and play it via a stable /assets/... URL from the React UI.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/public/assets/audio/glue-song-sped-up-pitched.mp3",
+          "frontend/src/hooks/useBackgroundMusic.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useBackgroundMusic.ts"
+        ]
+      },
+      {
+        "id": "REQ-13",
+        "summary": "Add an accessible music control UI that allows the user to toggle background music on/off (mute/unmute) while preserving the current visual theme and layout (mobile + desktop).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/Header.tsx",
+          "frontend/src/pages/ValentinePage.tsx",
+          "frontend/src/hooks/useBackgroundMusic.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/Header.tsx",
+          "frontend/src/pages/ValentinePage.tsx",
+          "frontend/src/hooks/useBackgroundMusic.ts"
+        ]
+      },
+      {
+        "id": "REQ-14",
+        "summary": "Ensure background audio playback behavior is compatible with modern browser autoplay policies by requiring a user interaction to start playback when needed (without showing intrusive prompts).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useBackgroundMusic.ts",
+          "frontend/src/pages/ValentinePage.tsx",
+          "frontend/src/components/Header.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useBackgroundMusic.ts",
+          "frontend/src/pages/ValentinePage.tsx",
+          "frontend/src/components/Header.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/components/Header.tsx",
+    "frontend/src/hooks/useBackgroundMusic.ts",
+    "frontend/src/pages/ValentinePage.tsx",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

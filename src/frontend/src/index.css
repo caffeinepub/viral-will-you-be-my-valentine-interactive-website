@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 1rem;
+        --background: 0.99 0.01 10;
+        --foreground: 0.2 0.02 10;
+        --card: 1 0 0;
+        --card-foreground: 0.2 0.02 10;
+        --popover: 1 0 0;
+        --popover-foreground: 0.2 0.02 10;
+        --primary: 0.58 0.18 12;
+        --primary-foreground: 0.99 0.01 10;
+        --secondary: 0.97 0.02 10;
+        --secondary-foreground: 0.2 0.02 10;
+        --muted: 0.96 0.01 10;
+        --muted-foreground: 0.5 0.01 10;
+        --accent: 0.95 0.03 350;
+        --accent-foreground: 0.2 0.02 10;
+        --destructive: 0.55 0.22 25;
+        --destructive-foreground: 0.99 0.01 10;
+        --border: 0.92 0.01 10;
+        --input: 0.92 0.01 10;
+        --ring: 0.58 0.18 12;
+        --chart-1: 0.58 0.18 12;
+        --chart-2: 0.65 0.15 350;
+        --chart-3: 0.52 0.20 5;
+        --chart-4: 0.70 0.12 340;
+        --chart-5: 0.60 0.16 15;
+        --sidebar: 0.99 0.01 10;
+        --sidebar-foreground: 0.2 0.02 10;
+        --sidebar-primary: 0.58 0.18 12;
+        --sidebar-primary-foreground: 0.99 0.01 10;
+        --sidebar-accent: 0.97 0.02 10;
+        --sidebar-accent-foreground: 0.2 0.02 10;
+        --sidebar-border: 0.92 0.01 10;
+        --sidebar-ring: 0.58 0.18 12;
+    }
+
+    .dark {
+        --background: 0.15 0.02 10;
+        --foreground: 0.98 0.01 10;
+        --card: 0.20 0.02 10;
+        --card-foreground: 0.98 0.01 10;
+        --popover: 0.18 0.02 10;
+        --popover-foreground: 0.98 0.01 10;
+        --primary: 0.65 0.15 350;
+        --primary-foreground: 0.15 0.02 10;
+        --secondary: 0.25 0.02 10;
+        --secondary-foreground: 0.98 0.01 10;
+        --muted: 0.25 0.02 10;
+        --muted-foreground: 0.65 0.01 10;
+        --accent: 0.30 0.03 350;
+        --accent-foreground: 0.98 0.01 10;
+        --destructive: 0.60 0.20 20;
+        --destructive-foreground: 0.15 0.02 10;
+        --border: 1 0 0 / 12%;
+        --input: 1 0 0 / 15%;
+        --ring: 0.65 0.15 350;
+        --chart-1: 0.65 0.15 350;
+        --chart-2: 0.70 0.12 340;
+        --chart-3: 0.58 0.18 12;
+        --chart-4: 0.75 0.10 330;
+        --chart-5: 0.62 0.16 5;
+        --sidebar: 0.20 0.02 10;
+        --sidebar-foreground: 0.98 0.01 10;
+        --sidebar-primary: 0.65 0.15 350;
+        --sidebar-primary-foreground: 0.98 0.01 10;
+        --sidebar-accent: 0.25 0.02 10;
+        --sidebar-accent-foreground: 0.98 0.01 10;
+        --sidebar-border: 1 0 0 / 12%;
+        --sidebar-ring: 0.65 0.15 350;
+    }
+
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+}
+
+@layer utilities {
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes scaleIn {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes bounceIn {
+        0% {
+            opacity: 0;
+            transform: scale(0);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0) scale(1) rotate(0deg);
+        }
+        50% {
+            transform: translateY(-10px) scale(1.2) rotate(5deg);
+        }
+    }
+
+    @keyframes fall {
+        0% {
+            transform: translateY(-20px) rotate(var(--rotation-start));
+            opacity: 1;
+        }
+        75% {
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(110vh) rotate(var(--rotation-end));
+            opacity: 0;
+        }
+    }
+
+    .animate-fade-in-down {
+        animation: fadeInDown 0.6s ease-out 0.2s both;
+    }
+
+    .animate-fade-in-up {
+        animation: fadeInUp 0.6s ease-out 0.4s both;
+    }
+
+    .animate-fade-in-up-delayed {
+        animation: fadeInUp 0.6s ease-out 0.6s both;
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 0.3s ease-out both;
+    }
+
+    .animate-scale-in {
+        animation: scaleIn 0.5s ease-out both;
+    }
+
+    .animate-bounce-in {
+        animation: bounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+    }
+
+    .animate-float {
+        animation: float 2s ease-in-out infinite;
+    }
+
+    .animate-float-delayed {
+        animation: float 2.5s ease-in-out 0.5s infinite;
+    }
+
+    .animate-fall {
+        animation: fall linear infinite;
+    }
+}
